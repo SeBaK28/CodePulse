@@ -143,3 +143,4 @@
 /Users/sebastiankonstanty/Kursy/RestAPI/api/obj/Debug/net8.0/api.pdb
 /Users/sebastiankonstanty/Kursy/RestAPI/api/obj/Debug/net8.0/api.genruntimeconfig.cache
 /Users/sebastiankonstanty/Kursy/RestAPI/api/obj/Debug/net8.0/ref/api.dll
+/Users/sebastiankonstanty/Kursy/RestAPI/api/obj/Debug/net8.0/api.sourcelink.json
