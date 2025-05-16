@@ -44,5 +44,11 @@ namespace api.Controllers
 
             return Ok(response);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll(){
+            var elem = await _categoryRepo.GetAllAsync();
+            var stock = elem.Select(e => e)
+        }
     }
 }
