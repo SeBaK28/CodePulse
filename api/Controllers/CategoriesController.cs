@@ -46,9 +46,23 @@ namespace api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll(){
+        public async Task<IActionResult> GetAllCategory()
+        {
             var elem = await _categoryRepo.GetAllAsync();
-            var stock = elem.Select(e => e)
+
+            var response = new List<CategoryDto>();
+
+            foreach (var elems in elem)
+            {
+                response.Add(new CategoryDto
+                {
+                    Id = elems.Id,
+                    Name = elems.Name,
+                    URLHandle = elems.URLHandle
+                });
+            }
+
+            return Ok(response);
         }
     }
 }

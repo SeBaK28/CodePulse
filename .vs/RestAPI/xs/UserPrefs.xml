@@ -1,0 +1,27 @@
+﻿<Properties StartupConfiguration="{33A30EC6-4687-431A-BA3C-91CE44DFDEE0}|https">
+  <MonoDevelop.Ide.ItemProperties.api PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workbench ActiveDocument="api/Repository/CategoryRepository.cs">
+    <Files>
+      <File FileName="api/Repository/CategoryRepository.cs" Line="20" Column="23" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="RestAPI" expanded="True">
+            <Node name="api">
+              <Node name="Repository" expanded="True">
+                <Node name="CategoryRepository.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

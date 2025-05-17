@@ -9,6 +9,6 @@ namespace api.Interfaces
     public interface ICategoryRepository
     {
         Task<Category> CreateAsync(Category category);
-        Task<List<Category>> GetAllAsync();
+        Task<IEnumerable<Category>> GetAllAsync();
     }
 }
