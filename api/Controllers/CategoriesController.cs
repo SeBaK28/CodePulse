@@ -22,7 +22,7 @@ namespace api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateCategory(CreateCategoryRequestDto request)
+        public async Task<IActionResult> CreateCategory([FromBody] CreateCategoryRequestDto request)
         {
 
             //Map Dto to Domain
@@ -64,5 +64,53 @@ namespace api.Controllers
 
             return Ok(response);
         }
+
+        [HttpGet]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> GetByIdCategory([FromRoute] Guid id)
+        {
+            var isExist = await _categoryRepo.GetByIdAsync(id);
+
+            if (isExist is null)
+            {
+                return NotFound();
+            }
+
+            var response = new CategoryDto
+            {
+                Id = isExist.Id,
+                Name = isExist.Name,
+                URLHandle = isExist.URLHandle,
+            };
+
+            return Ok(response);
+        }
+
+        [HttpPut]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> UpdateCategory([FromRoute] Guid id, UpdateCategoryRequestDto updateCategory)
+        {
+            var category = new Category
+            {
+                Id = id,
+                Name = updateCategory.Name,
+                URLHandle = updateCategory.URLHandle
+            };
+
+            category = await _categoryRepo.UpdateAsync(category);
+
+            if (category is null)
+            {
+                return NotFound();
+            }
+
+            var update = new CategoryDto
+            {
+                Id = category.Id,
+                Name = category.Name,
+                URLHandle = category.URLHandle
+            };
+            return Ok(update);
+        }
     }
-}
+} 
