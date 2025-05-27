@@ -112,5 +112,25 @@ namespace api.Controllers
             };
             return Ok(update);
         }
+
+        [HttpDelete]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> DeleteCategory([FromRoute] Guid id)
+        {
+            var request = await _categoryRepo.DeleteAsync(id);
+            if (request is null)
+            {
+                return NotFound();
+            }
+
+            var response = new CategoryDto
+            {
+                Id = request.Id,
+                Name = request.Name,
+                URLHandle = request.URLHandle
+            };
+
+            return Ok(response);
+        }
     }
 } 

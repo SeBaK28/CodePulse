@@ -25,6 +25,18 @@ namespace api.Repository
             return category;
         }
 
+        public async Task<Category?> DeleteAsync(Guid id)
+        {
+            var response = await _context.Categories.FirstOrDefaultAsync(x => x.Id.Equals(id));
+            if (response is not null)
+            {
+                _context.Remove(response);
+                await _context.SaveChangesAsync();
+                return response;
+            }
+            return null;
+        }
+
         public async Task<IEnumerable<Category>> GetAllAsync()
         {
             return await _context.Categories.ToListAsync();
@@ -43,7 +55,7 @@ namespace api.Repository
             if (findCategory is not null)
             {
                 _context.Entry(findCategory).CurrentValues.SetValues(category);
-                _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
                 return category;
             }
 
