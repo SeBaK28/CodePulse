@@ -8,6 +8,7 @@ import { Subscription } from 'rxjs';
 import { CategoryService } from '../services/category.service';
 import { Category } from '../models/category.model';
 import { UpdateCategoryRequest } from '../models/update-category-request.model';
+import { response } from 'express';
 
 @Component({
   selector: 'app-edit-category',
@@ -59,6 +60,18 @@ export class EditCategoryComponent implements OnInit, OnDestroy{
           this.router.navigateByUrl('/admin/categories');
         }
       });
+    }
+  }
+
+  onDelete(): void{
+    if(this.id){
+      this.categoryService.deleteCategory(this.id)
+      .subscribe({
+        next: (response) => {
+          this.router.navigateByUrl('/admin/categories');
+        }
+      })
+
     }
   }
 
