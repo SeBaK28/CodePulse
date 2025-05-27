@@ -30,5 +30,24 @@ namespace api.Repository
             return await _context.Categories.ToListAsync();
             
         }
+
+        public async Task<Category?> GetByIdAsync(Guid id)
+        {
+            return await _context.Categories.FirstOrDefaultAsync(x => x.Id.Equals(id));
+        }
+
+        public async Task<Category?> UpdateAsync(Category category)
+        {
+            var findCategory = await _context.Categories.FirstOrDefaultAsync(x => x.Id.Equals(category.Id));
+
+            if (findCategory is not null)
+            {
+                _context.Entry(findCategory).CurrentValues.SetValues(category);
+                _context.SaveChangesAsync();
+                return category;
+            }
+
+            return null;
+        }
     }
 }
