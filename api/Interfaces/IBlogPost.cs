@@ -9,5 +9,6 @@ namespace api.Interfaces
     public interface IBlogPost
     {
         Task<BlogPost?> AddBlogPostAsync(BlogPost post);
+        Task<List<BlogPost>> GetAllBlogPostAsync();
     }
 }

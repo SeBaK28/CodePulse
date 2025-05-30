@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using api.Data;
 using api.Interfaces;
 using api.Models.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace api.Repository
 {
@@ -22,6 +23,11 @@ namespace api.Repository
             await _context.SaveChangesAsync();
 
             return post;
+        }
+
+        public async Task<List<BlogPost>> GetAllBlogPostAsync()
+        {
+            return await _context.BlogPosts.ToListAsync();
         }
     }
 }

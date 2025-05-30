@@ -35,7 +35,7 @@ export class AddBlogpostComponent {
 
 
   onFormSubmit(): void{
-    this.blogPostService.CreateBlogPost(this.model)
+    this.blogPostService.createBlogPost(this.model)
     .subscribe({
       next: (response) =>{
         this.route.navigateByUrl('/admin/blogpost');
