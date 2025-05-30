@@ -12,7 +12,12 @@ export class BlogPostService {
 
   constructor(private http: HttpClient) { }
 
-  CreateBlogPost(data: AddBlogPost):Observable<BlogPost>{
+  createBlogPost(data: AddBlogPost):Observable<BlogPost>{
     return this.http.post<BlogPost>(`${environment.apiBaseUrl}/api/blogPost`, data);
   }
+
+  getAllBlogPost():Observable<BlogPost[]>{
+    return this.http.get<BlogPost[]>(`${environment.apiBaseUrl}/api/blogPost`);
+  }
+
 }
