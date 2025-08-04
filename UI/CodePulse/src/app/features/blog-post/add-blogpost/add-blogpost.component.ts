@@ -7,11 +7,12 @@ import { AddBlogPost } from '../models/add-blog-post.model';
 import { BlogPostService } from '../services/blog-post.service';
 import { nextTick } from 'process';
 import { response } from 'express';
+import { MarkdownModule } from 'ngx-markdown';
 
 @Component({
   selector: 'app-add-blogpost',
   standalone: true,
-  imports: [HttpClientModule, CommonModule, RouterModule, FormsModule],
+  imports: [HttpClientModule, CommonModule, RouterModule, FormsModule, MarkdownModule],
   templateUrl: './add-blogpost.component.html',
   styleUrl: './add-blogpost.component.css'
 })
