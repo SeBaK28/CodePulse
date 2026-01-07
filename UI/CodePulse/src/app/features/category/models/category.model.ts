@@ -1,5 +1,4 @@
-export interface Category{
-    id: string;
+export interface AddCategoryRequest{
     name: string;
     urlHandle: string;
 }
