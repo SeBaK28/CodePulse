@@ -21,6 +21,7 @@
                             <th>Title</th>
                             <th>Short Description</th>
                             <th>Is Visible</th>
+                            <th>Categories</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -29,6 +30,11 @@
                                 <td>{{blogpost.title}}</td>
                                 <td>{{blogpost.shortDescription}}</td>
                                 <td>{{blogpost.isVisible}}</td>
+                                <td>
+                                    @for (category of blogpost.categories; track category.id) {
+                                        <span class="badge text-bg-secondary">{{category.name}}</span>
+                                    }
+                                </td>
                             </tr>
                         }
                     </tbody>
