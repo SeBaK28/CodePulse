@@ -46,6 +46,7 @@ namespace api.Controllers
         }
 
         [HttpGet]
+        [Route("/api/categories/getAll")]
         public async Task<IActionResult> GetAllCategory()
         {
             var elem = await _categoryRepo.GetAllAsync();
