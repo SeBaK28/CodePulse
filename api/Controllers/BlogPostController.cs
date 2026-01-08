@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using api.Data;
 using api.Interfaces;
 using api.Models.Domain;
 using api.Models.Dtos;
@@ -16,10 +17,13 @@ namespace api.Controllers
     public class BlogPostController : ControllerBase
     {
         private readonly IBlogPost _blogRepo;
+        private readonly ICategoryRepository _categoryRepo;
 
-        public BlogPostController(IBlogPost blogRepo)
+        public BlogPostController(IBlogPost blogRepo, ICategoryRepository categoryRepo)
         {
             _blogRepo = blogRepo;
+            _categoryRepo = categoryRepo;
+            
         }
 
         [HttpPost]
@@ -34,8 +38,18 @@ namespace api.Controllers
                 URLHandle = post.URLHandle,
                 CreatedAt = post.CreatedAt,
                 Author = post.Author,
-                IsVisible = post.IsVisible
+                IsVisible = post.IsVisible,
+                Categories = new List<Category>()
             };
+
+            foreach(var categoryGuid in post.Categories)
+            {
+                var existingCategory = await _categoryRepo.GetByIdAsync(categoryGuid);
+                if(existingCategory is not null)
+                {
+                    blog.Categories.Add(existingCategory);
+                }
+            }
 
             await _blogRepo.AddBlogPostAsync(blog);
 
@@ -49,7 +63,13 @@ namespace api.Controllers
                 URLHandle = blog.URLHandle,
                 CreatedAt = blog.CreatedAt,
                 Author = blog.Author,
-                IsVisible = blog.IsVisible
+                IsVisible = blog.IsVisible,
+                Categories = blog.Categories.Select(x=> new CategoryDto
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    URLHandle = x.URLHandle
+                }).ToList()
             };
 
             return Ok(response);
@@ -74,7 +94,13 @@ namespace api.Controllers
                     URLHandle = elems.URLHandle,
                     CreatedAt = elems.CreatedAt,
                     Author = elems.Author,
-                    IsVisible = elems.IsVisible
+                    IsVisible = elems.IsVisible,
+                    Categories = elems.Categories.Select(x=>new CategoryDto
+                    {
+                        Id = x.Id,
+                        Name = x.Name,
+                        URLHandle = x.URLHandle
+                    }).ToList()
                 });
             }
 

@@ -27,7 +27,7 @@ namespace api.Repository
 
         public async Task<List<BlogPost>> GetAllBlogPostAsync()
         {
-            return await _context.BlogPosts.ToListAsync();
+            return await _context.BlogPosts.Include(x=>x.Categories).ToListAsync();
         }
     }
 }
