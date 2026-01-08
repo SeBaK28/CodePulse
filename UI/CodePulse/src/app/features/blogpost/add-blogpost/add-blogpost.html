@@ -1,0 +1,45 @@
+<div class="container">
+
+    <h1 class="mt-3">Add Blog Post</h1>
+
+    <form class="'mt-3" [formGroup]="addBlogPostForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+            <label class="'form-label">Title</label>
+            <input type="text" class="form-control" formControlName="title">
+        </div>
+        <div class="mb-3">
+            <label class="'form-label">Short Description</label>
+            <input type="text" class="form-control" formControlName="shortDescription">
+        </div>
+        <div class="mb-3">
+            <label class="'form-label">Content</label>
+            <textarea class="form-control" formControlName="content" rows="5"></textarea>
+        </div>
+        <div class="mb-3">
+            <label class="'form-label">Image URL</label>
+            <input type="text" class="form-control" formControlName="featuredImageURL">
+        </div>
+        <div class="mb-3">
+            <label class="'form-label">URL Handle</label>
+            <input type="text" class="form-control" formControlName="urlHandle">
+        </div>
+        <div class="mb-3">
+            <label class="'form-label">Created at</label>
+            <input type="date" class="form-control" formControlName="createdAt">
+        </div>
+        <div class="mb-3">
+            <label class="'form-label">Author</label>
+            <input type="text" class="form-control" formControlName="author">
+        </div>
+        <div class="my-3">
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="isVisible" checked formControlName="isVisible">         
+                <label class="form-check-label" for="isVisible">Is Visible</label>
+            </div>
+        </div>
+        <div clas="mt-3">
+            <button class="btn btn-primary" type="submit">Save</button>
+        </div>
+    </form>
+
+</div>
