@@ -106,5 +106,96 @@ namespace api.Controllers
 
             return Ok(response);
         }
+
+        [HttpGet]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> GetBlogPostById([FromRoute]Guid id)
+        {
+            var isExist = await _blogRepo.GetBlogPostByIdAsync(id);
+
+            if(isExist is null)
+            {
+                return NotFound();
+            }
+
+            var response = new BlogPostDto
+            {
+                Id = isExist.Id,
+                Title = isExist.Title,
+                ShortDescription = isExist.ShortDescription,
+                Content = isExist.Content,
+                FeaturedImageURL = isExist.FeaturedImageURL,
+                URLHandle = isExist.URLHandle,
+                CreatedAt = isExist.CreatedAt,
+                Author = isExist.Author,
+                IsVisible = isExist.IsVisible,
+                Categories = isExist.Categories.Select(x=> new CategoryDto
+                {
+                    Id =x.Id,
+                    Name = x.Name,
+                    URLHandle = x.URLHandle 
+                }).ToList()
+            };
+            return Ok(response);
+        }
+
+        [HttpPut]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> UpdateBlogPost([FromRoute] Guid id, UpdateBlogPostRequestDto updateDto)
+        {
+            var updatedBlogPost = new BlogPost
+            {
+                Id = id,
+                Title = updateDto.Title,
+                ShortDescription = updateDto.ShortDescription,
+                Content = updateDto.Content,
+                FeaturedImageURL = updateDto.FeaturedImageURL,
+                URLHandle = updateDto.URLHandle,
+                CreatedAt = updateDto.CreatedAt,
+                Author = updateDto.Author,
+                IsVisible = updateDto.IsVisible,
+                Categories = new List<Category>()
+            };
+
+            foreach(var item in updateDto.Categories)
+            {
+                var existingCategory = await _categoryRepo.GetByIdAsync(item);
+
+                if(existingCategory is not null)
+                {
+                    updatedBlogPost.Categories.Add(existingCategory);
+                }
+            };
+
+            var request = await _blogRepo.UpdateBlogPostAsync(updatedBlogPost);
+
+            if(request is null)
+            {
+                return NotFound();
+            }
+
+            var update = new BlogPostDto
+            {
+                Id = updatedBlogPost.Id,
+                Title = updatedBlogPost.Title,
+                ShortDescription = updatedBlogPost.ShortDescription,
+                Content = updatedBlogPost.Content,
+                FeaturedImageURL = updatedBlogPost.FeaturedImageURL,
+                URLHandle = updatedBlogPost.URLHandle,
+                CreatedAt = updatedBlogPost.CreatedAt,
+                Author = updatedBlogPost.Author,
+                IsVisible = updatedBlogPost.IsVisible,
+                Categories = updatedBlogPost.Categories.Select(x=> new CategoryDto
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    URLHandle = x.URLHandle
+                }).ToList()
+            };
+
+            return Ok(update);
+
+
+        }
     }
 }
