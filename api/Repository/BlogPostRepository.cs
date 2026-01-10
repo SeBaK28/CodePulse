@@ -29,5 +29,24 @@ namespace api.Repository
         {
             return await _context.BlogPosts.Include(x=>x.Categories).ToListAsync();
         }
+
+        public async Task<BlogPost?> GetBlogPostByIdAsync(Guid id)
+        {
+            return await _context.BlogPosts.Include(x=>x.Categories).FirstOrDefaultAsync(x=>x.Id == id);
+        }
+
+        public async Task<BlogPost?> UpdateBlogPostAsync(BlogPost blogPost)
+        {
+            var findBlogPost = await _context.BlogPosts.Include(x=>x.Categories).FirstOrDefaultAsync(x=>x.Id == blogPost.Id);
+
+            if(findBlogPost is not null)
+            {
+                _context.Entry(findBlogPost).CurrentValues.SetValues(blogPost);
+                findBlogPost.Categories = blogPost.Categories;
+                await _context.SaveChangesAsync();
+                return blogPost;
+            }
+            return null;
+        }
     }
 }

@@ -19,8 +19,20 @@ export interface BlogPostModel{
     content: string
     featuredImageURL: string
     urlHandle: string
-    createdAt: Date
+    createdAt: string
     author: string
     isVisible: boolean
     categories: Category[]
+}
+
+export interface UpdateBlogPost{
+    title: string
+    shortDescription: string
+    content: string
+    featuredImageURL: string
+    urlHandle: string
+    createdAt: Date
+    author: string
+    isVisible: boolean
+    categories: string[]
 }

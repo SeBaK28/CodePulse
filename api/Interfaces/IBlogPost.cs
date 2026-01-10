@@ -10,5 +10,7 @@ namespace api.Interfaces
     {
         Task<BlogPost?> AddBlogPostAsync(BlogPost post);
         Task<List<BlogPost>> GetAllBlogPostAsync();
+        Task<BlogPost?> GetBlogPostByIdAsync(Guid id);
+        Task<BlogPost?> UpdateBlogPostAsync(BlogPost blogPost);
     }
 }
