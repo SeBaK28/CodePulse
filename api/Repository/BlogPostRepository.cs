@@ -25,6 +25,20 @@ namespace api.Repository
             return post;
         }
 
+        public async Task<BlogPost?> DeleteBlogPostAsync(Guid id)
+        {
+            var findBlogPost = await _context.BlogPosts.FirstOrDefaultAsync(x=>x.Id.Equals(id));
+
+            if(findBlogPost is null)
+            {
+                return null;
+            }
+
+            _context.Remove(findBlogPost);
+            await _context.SaveChangesAsync();
+            return findBlogPost;
+        }
+
         public async Task<List<BlogPost>> GetAllBlogPostAsync()
         {
             return await _context.BlogPosts.Include(x=>x.Categories).ToListAsync();

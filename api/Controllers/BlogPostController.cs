@@ -197,5 +197,18 @@ namespace api.Controllers
 
 
         }
+
+        [HttpDelete]
+        [Route("{id:guid}")]
+        public async Task<IActionResult> DeleteBlogPost([FromRoute] Guid id)
+        {
+            var response = await _blogRepo.DeleteBlogPostAsync(id);
+
+            if(response is null)
+            {
+                return NotFound();
+            }
+            return Ok();
+        }
     }
 }

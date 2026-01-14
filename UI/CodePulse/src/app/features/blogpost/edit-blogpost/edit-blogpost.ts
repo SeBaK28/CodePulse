@@ -86,6 +86,22 @@ export class EditBlogpost {
     }
   }
 
+  DeleteBlogPost(){
+    const id = this.id();
+    if(!id){
+      return;
+    }
+
+    this.blogPostService.deleteBlogPost(id).subscribe({
+      next: () =>{
+        this.route.navigate(['/admin/blogpost'])
+      },
+      error: () =>{
+        alert("Sth went wrong");
+      }
+    })
+  }
+
   
   
 }

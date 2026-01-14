@@ -30,4 +30,8 @@ export class BlogpostService {
     //this.updateBlogPostSignal.set('loading');
     return this.http.put<BlogPostModel>(`${this.baseApiUrl}/api/blogPost/${id}`, blogPost)//
   }
+
+  deleteBlogPost(id: string): Observable<void>{
+    return this.http.delete<void>(`${this.baseApiUrl}/api/blogPost/${id}`)
+  }
 }

@@ -12,5 +12,6 @@ namespace api.Interfaces
         Task<List<BlogPost>> GetAllBlogPostAsync();
         Task<BlogPost?> GetBlogPostByIdAsync(Guid id);
         Task<BlogPost?> UpdateBlogPostAsync(BlogPost blogPost);
+        Task<BlogPost?> DeleteBlogPostAsync(Guid id);
     }
 }
