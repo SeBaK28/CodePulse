@@ -7,10 +7,12 @@ import { CategoryService } from '../../category/services/category-service';
 import { UpdateCategory } from '../../category/models/category.model';
 import { UpdateBlogPost } from '../models/blogpost.model';
 import { ConstantPool } from '@angular/compiler';
+import { ImageSelector } from '../../../shared/components/image-selector/image-selector';
+import { ImageSelectorSerice } from '../../../shared/services/image-selector-serice';
 
 @Component({
   selector: 'app-edit-blogpost',
-  imports: [ReactiveFormsModule, MarkdownComponent],
+  imports: [ReactiveFormsModule, MarkdownComponent, ImageSelector],
   templateUrl: './edit-blogpost.html',
   styleUrl: './edit-blogpost.css',
 })
@@ -18,6 +20,7 @@ export class EditBlogpost {
   id= input<string>();
   private blogPostService = inject(BlogpostService);
   private categoryService = inject(CategoryService);
+  private imageService = inject(ImageSelectorSerice)
   private route = inject(Router);
 
   blogPostResourceRef = this.blogPostService.getBlogPostById(this.id);
@@ -102,6 +105,9 @@ export class EditBlogpost {
     })
   }
 
+  openImageSelector(){
+    this.imageService.displayImageSelector();
+  }
   
   
 }
