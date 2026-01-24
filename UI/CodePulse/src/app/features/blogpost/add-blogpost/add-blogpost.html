@@ -32,7 +32,9 @@
                     <img style="width: 100px;" class="my-2" [src]="addBlogPostForm.controls.featuredImageURL.getRawValue()"/>
                 </div>
             }
-            <label class="'form-label">Image URL</label>
+            <label class="'form-label">Image URL
+                <button class="btn btn-light" type="button" (click)="openImageSelector()">Select Images</button>
+            </label>
             <input type="text" class="form-control" formControlName="featuredImageURL">
         </div>
         <div class="mb-3">
@@ -67,3 +69,4 @@
     </form>
 
 </div>
+

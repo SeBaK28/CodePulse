@@ -8,15 +8,29 @@
     </div>
     <div class="card-body">
         <div class="d-flex flex-md-row flex-sm-column flex-wrap">
+            <!--Display all images-->
             <div class="col-8 p-4">
+                @if(isLoading()){
+                    <p>Loading...</p>
+                }@else{
+                    <div class="d-flex flex-wrap overflow-auto" style="max-height: calc(100vh - 300px);">
+                        @for(image of images(); track image.id){
+                            <div class="d-flex flex-column align-items-center p-4" roel="button" (click)="onSelectImage(image)">
+                                <img [src]="image.url" [alt]="image.title" style="height: 100px;"/>
+                                <span>{{image.title}}</span>
+                            </div>
+                        }
+                    </div>
+                }
 
             </div>
-                <div class='col-4 p-4 bg-light'>
+            <!--Upload image-->
+            <div class='col-4 p-4 bg-light'>
                     <h5>Upload image</h5>
 
                       <form [formGroup]="imageSelectorUploadForm" (ngSubmit)="onSubmit()">
                         <div class="mt-3">
-                            <input type="file" class="form-control" formControlName="file">
+                            <input type="file" class="form-control" (change)="onFileSelected($event)">
                         </div>
                         <div class="mt-3">
                             <input type="text" class="form-control" placeholder="file name" formControlName="name">

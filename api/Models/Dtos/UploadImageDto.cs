@@ -7,8 +7,8 @@ namespace api.Models.Dtos
 {
     public class UploadImageDto
     {
-        public FormFile file { get; set; }
-        public string fileName { get; set; }
-        public string title { get; set; }
+        public IFormFile File { get; set; }
+        public string Name { get; set; }
+        public string Title { get; set; }
     }
 }

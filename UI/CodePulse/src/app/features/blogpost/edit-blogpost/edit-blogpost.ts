@@ -12,7 +12,7 @@ import { ImageSelectorSerice } from '../../../shared/services/image-selector-ser
 
 @Component({
   selector: 'app-edit-blogpost',
-  imports: [ReactiveFormsModule, MarkdownComponent, ImageSelector],
+  imports: [ReactiveFormsModule, MarkdownComponent],
   templateUrl: './edit-blogpost.html',
   styleUrl: './edit-blogpost.css',
 })
@@ -53,6 +53,16 @@ export class EditBlogpost {
         isVisible: this.blogPostRef()?.isVisible,
         categories: this.blogPostRef()?.categories.map(x=>x.id)
       })
+    }
+  })
+
+  selectedImageEffectRef = effect(()=>{
+    const selectedImageUrl = this.imageService.selectedImage();
+
+    if(selectedImageUrl){
+      this.editBlogPostForm.patchValue({
+        featuredImageURL: selectedImageUrl,
+      });
     }
   })
 

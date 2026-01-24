@@ -25,19 +25,19 @@ namespace api.Controllers
         // public async Task<IActionResult> UploadImage([FromForm]IFormFile file, [FromForm]string fileName, [FromForm]string title)
         public async Task<IActionResult> UploadImage([FromForm]UploadImageDto uploadDto)
         {
-            //ValidateFileUpload(uploadDto.file);
+            ValidateFileUpload(uploadDto.File);
 
             if (ModelState.IsValid)  //if there is no error in modelstate
             {
                 var blogImage = new BlogImage
                 {
-                    FileExtension = Path.GetExtension(uploadDto.fileName).ToLower(),
-                    FileName = uploadDto.fileName,
-                    Title = uploadDto.title,
+                    FileExtension = Path.GetExtension(uploadDto.File.FileName).ToLower(),
+                    FileName = uploadDto.Name,
+                    Title = uploadDto.Title,
                     DateCreated = DateTime.Now
                 };
 
-                blogImage = await _imageRepo.Upload(uploadDto.file ,blogImage);
+                blogImage = await _imageRepo.Upload(uploadDto.File ,blogImage);
 
                 var response = new BlogImageDto
                 {
@@ -67,6 +67,29 @@ namespace api.Controllers
             {
                 ModelState.AddModelError("file", "File size cannot be more than 10MB");
             }
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllImages()
+        {
+            var req = await _imageRepo.GetAllImages();
+
+            var response = new List<BlogImageDto>();
+
+            foreach(var elem in req)
+            {
+                response.Add(new BlogImageDto
+                {
+                    Id= elem.Id,
+                    FileName = elem.FileName,
+                    FileExtension = elem.FileExtension,
+                    Title = elem.Title,
+                    URL = elem.URL
+                });
+            }            
+
+            return Ok(response);
         }
         
     }

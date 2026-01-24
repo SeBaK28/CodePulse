@@ -1,7 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ImageSelectorSerice } from '../../services/image-selector-serice';
 import { FormControl, FormGroup, MinLengthValidator, ReactiveFormsModule, Validators } from '@angular/forms';
-import { UploadImageRequest } from '../../models/imgae-selector.model';
+import { BlogImage, UploadImageRequest } from '../../models/image-selector.model';
 
 @Component({
   selector: 'app-image-selector',
@@ -11,8 +11,13 @@ import { UploadImageRequest } from '../../models/imgae-selector.model';
 })
 export class ImageSelector {
   imageSelectorService = inject(ImageSelectorSerice);
-
   showImageSelector = this.imageSelectorService.showImageSelector.asReadonly();
+  id= signal<string | undefined>(undefined);
+  imageRef = this.imageSelectorService.getAllImagesSelector(this.id);
+  isLoading = this.imageRef.isLoading;
+  images = this.imageRef.value;
+
+
 
    imageSelectorUploadForm = new FormGroup({
     file: new FormControl<File | null | undefined>(null, {
@@ -30,6 +35,23 @@ export class ImageSelector {
     this.imageSelectorService.hideImageSelector();
   } 
 
+  onFileSelected(event: Event){
+    const input = event.target as HTMLInputElement;
+    if(!input.files || input.files.length === 0){
+      return;
+    }
+
+    const file = input.files[0];
+
+    this.imageSelectorUploadForm.patchValue({
+      file: file
+    })
+  }
+
+  onSelectImage(image: BlogImage){
+    this.imageSelectorService.selectImage(image.url);
+  }
+
   onSubmit(){
     if(this.imageSelectorUploadForm.valid){
       const formRowValue = this.imageSelectorUploadForm.getRawValue();
@@ -43,13 +65,15 @@ export class ImageSelector {
 
       this.imageSelectorService.uploadImageSelector(requestDto).subscribe({
         next:(response)=>{
-          console.log(response);
+          this.id.set(response.id); 
+          this.imageSelectorUploadForm.reset();
         },
         error: ()=>{
-          console.error("Something went worng!");
+          console.error("Sth went wrong");
         }
       })
     }
   }
+
     
 }
