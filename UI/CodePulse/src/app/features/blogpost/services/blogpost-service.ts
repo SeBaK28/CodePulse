@@ -26,6 +26,10 @@ export class BlogpostService {
     return httpResource<BlogPostModel>(()=> `${this.baseApiUrl}/api/blogPost/${id()}`);
   }
 
+  getBlogPostByUrlHandle(urlHandle:InputSignal<string | undefined>): HttpResourceRef<BlogPostModel | undefined>{
+    return httpResource<BlogPostModel>(()=> `${environment.baseApiUrl}/api/blogPost/${urlHandle()}`);
+  }
+
   updateBlogPost(id: string ,blogPost: UpdateBlogPost): Observable<BlogPostModel>{
     //this.updateBlogPostSignal.set('loading');
     return this.http.put<BlogPostModel>(`${this.baseApiUrl}/api/blogPost/${id}`, blogPost)//

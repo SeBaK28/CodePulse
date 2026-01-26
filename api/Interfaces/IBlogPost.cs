@@ -13,5 +13,6 @@ namespace api.Interfaces
         Task<BlogPost?> GetBlogPostByIdAsync(Guid id);
         Task<BlogPost?> UpdateBlogPostAsync(BlogPost blogPost);
         Task<BlogPost?> DeleteBlogPostAsync(Guid id);
+        Task<BlogPost?> GetBlogPostByUrlAsync(string urlHandle);
     }
 }

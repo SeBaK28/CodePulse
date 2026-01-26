@@ -139,6 +139,40 @@ namespace api.Controllers
             return Ok(response);
         }
 
+        [HttpGet]
+        [Route("{urlHandle}")]
+        public async Task<IActionResult> GetBlogPostByUrl([FromRoute]string urlHandle)
+        {
+            var blogPost = await _blogRepo.GetBlogPostByUrlAsync(urlHandle);
+
+            if (blogPost is null)
+            {
+                return NotFound();
+            }
+
+            var response = new BlogPostDto
+            {
+                Id = blogPost.Id,
+                Title = blogPost.Title,
+                ShortDescription = blogPost.ShortDescription,
+                Content = blogPost.Content,
+                FeaturedImageURL = blogPost.FeaturedImageURL,
+                URLHandle = blogPost.URLHandle,
+                CreatedAt = blogPost.CreatedAt,
+                Author = blogPost.Author,
+                IsVisible = blogPost.IsVisible,
+                Categories = blogPost.Categories.Select(x=> new CategoryDto
+                {
+                    Id =x.Id,
+                    Name = x.Name,
+                    URLHandle = x.URLHandle 
+                }).ToList()
+            };
+
+            return Ok(response);
+
+        }
+
         [HttpPut]
         [Route("{id:Guid}")]
         public async Task<IActionResult> UpdateBlogPost([FromRoute] Guid id, UpdateBlogPostRequestDto updateDto)

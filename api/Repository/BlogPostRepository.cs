@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using api.Controllers;
 using api.Data;
 using api.Interfaces;
 using api.Models.Domain;
@@ -47,6 +48,11 @@ namespace api.Repository
         public async Task<BlogPost?> GetBlogPostByIdAsync(Guid id)
         {
             return await _context.BlogPosts.Include(x=>x.Categories).FirstOrDefaultAsync(x=>x.Id == id);
+        }
+
+        public async Task<BlogPost?> GetBlogPostByUrlAsync(string urlHandle)
+        {
+            return await _context.BlogPosts.Include(x=>x.Categories).FirstOrDefaultAsync(x=>x.URLHandle ==urlHandle);
         }
 
         public async Task<BlogPost?> UpdateBlogPostAsync(BlogPost blogPost)
