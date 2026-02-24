@@ -15,7 +15,7 @@ export class BlogpostService {
   public updateBlogPostSignal = signal<'idle' | 'loading' | 'error' | 'success'>('idle');
   
   createBlogPost(blogpost: AddBlogPostRequest): Observable<BlogPostModel>{
-    return this.http.post<BlogPostModel>(`${this.baseApiUrl}/api/blogPost`, blogpost);
+    return this.http.post<BlogPostModel>(`${this.baseApiUrl}/api/blogPost`, blogpost, {withCredentials: true});
   }
 
   getAllBlogPosts():HttpResourceRef<BlogPostModel[] | undefined>{
@@ -32,10 +32,10 @@ export class BlogpostService {
 
   updateBlogPost(id: string ,blogPost: UpdateBlogPost): Observable<BlogPostModel>{
     //this.updateBlogPostSignal.set('loading');
-    return this.http.put<BlogPostModel>(`${this.baseApiUrl}/api/blogPost/${id}`, blogPost)//
+    return this.http.put<BlogPostModel>(`${this.baseApiUrl}/api/blogPost/${id}`, blogPost, {withCredentials: true})//
   }
 
   deleteBlogPost(id: string): Observable<void>{
-    return this.http.delete<void>(`${this.baseApiUrl}/api/blogPost/${id}`)
+    return this.http.delete<void>(`${this.baseApiUrl}/api/blogPost/${id}`, {withCredentials: true})
   }
 }
